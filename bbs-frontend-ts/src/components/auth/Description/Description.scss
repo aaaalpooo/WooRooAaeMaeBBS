@@ -1,0 +1,11 @@
+@import 'utils';
+
+.Description {
+    display: flex;
+    flex-direction: row-reverse;
+    .Text {
+        line-height: 2rem;
+        font-size: 1.15rem;
+        margin-top: 1rem;
+    }
+}

@@ -1,0 +1,36 @@
+@import 'utils';
+
+.Header {
+    height: 5rem;
+    background: $oc-gray-8;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .CenterWrapper {
+        display: flex;
+        flex: 1;
+        padding-left: 2rem;
+        padding-right: 2rem;
+        // justify-content: center;
+        justify-content: space-between;
+        .Left-Zone {
+            width: 6rem;
+        }
+        .Logo {
+            // margin: 0 auto;
+            flex: 1;
+            text-align: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+        .Right-Zone {
+            display: flex;
+            align-items: center;
+        }
+        
+    }
+    
+}

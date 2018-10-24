@@ -1,0 +1,42 @@
+@import 'utils';
+
+.Button {
+    display: flex;
+    align-items: center;
+
+    color: white;
+    font-size: 1.25rem;
+    border: 2px solid white;
+    border-radius: 2px;
+    padding-right: 1.25rem;
+    padding-left: 1.25rem;
+
+    user-select: none;
+    cursor: pointer;
+    &:hover {
+        background: $oc-gray-9;
+    }
+
+    &:active {
+        background: $oc-gray-8;
+    }
+
+    &.Login {
+        background: $oc-gray-8;
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+        border: none;
+        border-radius: 2px;
+        margin-top: 1rem;
+        display: flex;
+        justify-content: center;
+
+        &:hover {
+            background: $oc-gray-9;
+        }
+        
+        &:active {
+            background: $oc-gray-8;
+        }
+    }
+}

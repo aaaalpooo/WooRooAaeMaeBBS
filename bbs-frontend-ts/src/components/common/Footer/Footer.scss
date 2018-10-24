@@ -1,0 +1,20 @@
+@import 'utils';
+
+.Footer {
+    height: 10rem;
+    background: $oc-gray-8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    .Description {
+        margin: 0 auto;
+        font-size: 1.15rem;
+        font-weight: 800;
+        color: white;
+
+        @include media("<=medium") {
+            font-size: 0.75rem;
+        }
+    }
+}
