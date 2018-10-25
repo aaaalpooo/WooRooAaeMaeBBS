@@ -10,6 +10,7 @@ interface InputWithLabelProps {
   value?: string;
   placeholder?: string;
   onChange?(e: React.ChangeEvent<HTMLInputElement>): void;
+  onKeyPress?(e: React.KeyboardEvent<HTMLInputElement>): void;
 }
 
 const InputWithLabel: React.SFC<InputWithLabelProps> = props => (

@@ -3,33 +3,73 @@
 .AuthForm {
     display: flex;
     width: 100%;
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    .FormWrapper {
+
+    @include media("<=medium") {
+        height: 100%;
+    }
+
+    
+    
+    .LogoWrapper {
+        display: flex;
+        flex-direction: column;
         margin: 0 auto;
-        width: 625px;
-        padding: 3rem;
+
+        @include media("<=medium") {
+            width: 100%;
+        }
+
         transition: all 0.3s cubic-bezier(.25,.8,.25,1);
         @include material-shadow(3, 0.5);
 
         &:hover {
             @include material-shadow(3, 1.5);
         }
+    
 
-
-        .Logo {
-            background: $oc-gray-7;
+        .BigLogo {
             display: flex;
             justify-content: center;
             align-items: center;
+            background: $oc-gray-7;
+            padding-top: 2rem;
+            padding-bottom: 2rem;
 
             color: white;
+            font-weight: 800;
             font-size: 1.5rem;
-            font-weight: 700;
+        }
 
-            height: 4rem;
+        .FormWrapper {
+            margin: 0 auto;
+            width: 625px;
+            padding: 3rem;
+            
+            @include media("<=medium") {
+                width: 100%;
+                padding-right: 0.5rem;
+                padding-left: 0.5rem;
+               
+                padding-top: 0.75rem;
+            }
+    
+            .Logo {
+                background: $oc-gray-7;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+    
+                color: white;
+                font-size: 1.5rem;
+                font-weight: 700;
+    
+                height: 4rem;
+            }
         }
     }
+    
 }

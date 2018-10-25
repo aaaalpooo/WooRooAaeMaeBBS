@@ -15,8 +15,17 @@
         padding-right: 2rem;
         // justify-content: center;
         justify-content: space-between;
+
+        @include media("<=medium") {
+            padding: 1rem;
+        }
+
         .Left-Zone {
-            width: 6rem;
+            width: 8rem;
+
+            @include media("<=medium") {
+                width: 0rem;
+            }
         }
         .Logo {
             // margin: 0 auto;
@@ -25,10 +34,23 @@
             color: white;
             font-size: 1.5rem;
             font-weight: 800;
+
+            @include media("<=medium") {
+                text-align: left;
+            }
         }
         .Right-Zone {
             display: flex;
             align-items: center;
+            width: 8rem;
+            flex-direction: row-reverse;
+
+            .ButtonMenu {
+                @include media("<=medium") {
+                    display: none;
+                }
+                
+            }
         }
         
     }

@@ -5,11 +5,14 @@ import { withRouter } from 'react-router-dom';
 import { State } from 'store/modules';
 import { bindActionCreators } from 'redux';
 import { authActions } from 'store/modules/auth';
+import { menuActions } from 'store/modules/menu';
 
 interface HeaderContainerProps {
   AuthActions: typeof authActions;
+  MenuActions: typeof menuActions;
   logged: boolean;
   history: any;
+  sidebarVisible: boolean;
 }
 
 class HeaderContainer extends React.Component<HeaderContainerProps> {
@@ -27,16 +30,31 @@ class HeaderContainer extends React.Component<HeaderContainerProps> {
       console.log(e);
     }
   };
+
+  public handleSidebar = (visible: boolean) => {
+    const { MenuActions } = this.props;
+    MenuActions.manageMenuVisible(visible);
+  };
+
   public render() {
-    return <Header logged={this.props.logged} onLogout={this.handleLogout} />;
+    return (
+      <Header
+        logged={this.props.logged}
+        onLogout={this.handleLogout}
+        onSidebar={this.handleSidebar}
+        sidebarVisible={this.props.sidebarVisible}
+      />
+    );
   }
 }
 
 export default connect(
-  ({ auth }: State) => ({
+  ({ auth, menu }: State) => ({
     logged: auth.logged,
+    sidebarVisible: menu.visible,
   }),
   dispatch => ({
     AuthActions: bindActionCreators(authActions, dispatch),
+    MenuActions: bindActionCreators(menuActions, dispatch),
   })
 )(withRouter(HeaderContainer as any));

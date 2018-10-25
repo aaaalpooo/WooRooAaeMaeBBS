@@ -45,6 +45,17 @@ type RegisterAction = {
   payload: {
     data: {
       success: boolean;
+      username: string;
+      token: string;
+    };
+    response: {
+      data: {
+        validation: boolean;
+        username: boolean;
+        email: boolean;
+        existing: boolean;
+        password: boolean;
+      };
     };
   };
 };
@@ -155,17 +166,58 @@ const penders = [
     type: REGISTER,
     onSuccess: (state: AuthState, action: RegisterAction) => {
       return produce(state, draft => {
-        const { success } = action.payload.data;
+        const { success, token } = action.payload.data;
         if (success) {
           draft.logged = true;
-        } else {
-          draft.logged = false;
+          draft.token = token;
         }
       });
     },
     onFailure: (state: AuthState, action: RegisterAction) => {
       return produce(state, draft => {
+        const {
+          username,
+          password,
+          email,
+          validation,
+          existing,
+        } = action.payload.response.data;
         draft.logged = false;
+        draft.error = true;
+        if (username) {
+          if (validation) {
+            draft.errorMessage =
+              '알파벳과 숫자로된 6자 이상의 아이디로 입력하라!';
+            return;
+          }
+          if (existing) {
+            draft.errorMessage = '이미 존재하는 아이디니, 다른것으로 하라!';
+            return;
+          }
+          draft.errorMessage = '아이디를 입력하라!';
+          return;
+        }
+        if (password) {
+          if (validation) {
+            draft.errorMessage =
+              '알파벳과 숫자로된 6자 이상의 패스워드로 입력하라!';
+            return;
+          }
+          draft.errorMessage = '비밀번호를 입력하라!';
+          return;
+        }
+        if (email) {
+          if (validation) {
+            draft.errorMessage = '정확한 이메일을 입력하라!';
+            return;
+          }
+          if (existing) {
+            draft.errorMessage = '이미 존재하는 이메일이니, 다른것으로 하라!';
+            return;
+          }
+          draft.errorMessage = '이메일을 입력하라!';
+          return;
+        }
       });
     },
   },

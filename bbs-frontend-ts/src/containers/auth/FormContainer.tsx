@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom';
 import { authActions, ChangeInputPayload } from 'store/modules/auth';
 import AuthForm from 'components/auth/AuthForm';
 import { modalActions } from 'store/modules/modal';
+import { isEmail } from 'validator';
 
 interface FormContainerReduxProps {
   AuthActions: typeof authActions;
@@ -16,6 +17,9 @@ interface FormContainerReduxProps {
   email: string;
   token: string;
   logged: boolean;
+  error: boolean;
+  visible: boolean;
+  animate: boolean;
 }
 
 interface FormContainerProps extends React.Props<any> {
@@ -42,6 +46,15 @@ class FormContainer extends React.Component<
     if (prevProps.logged !== this.props.logged && this.props.logged) {
       this.props.history.push('/');
     }
+    if (prevProps.error !== this.props.error && this.props.error) {
+      const { ModalActions } = this.props;
+      ModalActions.modalAction({ visible: true, openingModal: 'register' });
+    }
+  }
+
+  public componentWillUnmount() {
+    const { AuthActions } = this.props;
+    AuthActions.initializeInput();
   }
 
   public handleChangeInput = (payload: ChangeInputPayload) => {
@@ -89,7 +102,6 @@ class FormContainer extends React.Component<
     }
 
     if (password !== passwordCheck) {
-      // TODO: Modal Opening
       AuthActions.manageError({
         error: true,
         errorMessage: '대원! 패스워드를 정확히 하라!',
@@ -98,8 +110,21 @@ class FormContainer extends React.Component<
       return;
     }
 
+    if (!isEmail(email)) {
+      AuthActions.manageError({
+        error: true,
+        errorMessage: '대원! 이메일을 형식에 맞게 입력하라!',
+      });
+      ModalActions.modalAction({ visible: true, openingModal: 'register' });
+      return;
+    }
+
     try {
       await AuthActions.register({ username, password, passwordCheck, email });
+      localStorage.setItem(
+        'userInfo',
+        JSON.stringify({ username, token: this.props.token })
+      );
     } catch (e) {
       console.log(e);
     }
@@ -116,19 +141,24 @@ class FormContainer extends React.Component<
         onChangeInput={this.handleChangeInput}
         onLogin={this.handleLogin}
         onRegister={this.handleRegister}
+        modalVisible={this.props.visible}
+        modalAnimate={this.props.animate}
       />
     );
   }
 }
 
 export default connect(
-  ({ auth }: State, ownProps: any) => ({
+  ({ auth, modal }: State, ownProps: any) => ({
     username: auth.inputs.username,
     password: auth.inputs.password,
     passwordCheck: auth.inputs.passwordCheck,
     email: auth.inputs.email,
     token: auth.token,
     logged: auth.logged,
+    error: auth.error,
+    visible: modal.visible,
+    animate: modal.animate,
   }),
   dispatch => ({
     AuthActions: bindActionCreators(authActions, dispatch),

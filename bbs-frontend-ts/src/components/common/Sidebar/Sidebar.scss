@@ -1,0 +1,71 @@
+@import 'utils';
+
+.Sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 80%;
+    height: 100%;
+    background: $oc-gray-9;
+    z-index: 15;
+    padding-top: 5rem;
+
+    display: flex;
+    flex-direction: column;
+
+
+    &.Opening {
+        transform: translate(0%);
+        transition: all 0.1s ease-in-out;
+    }
+
+    &.Closing {
+        transition: all 0.1s ease-in-out;
+        transform: translate(100%);
+    }
+
+    @include media(">medium") {
+        width: 20%;
+    }
+
+    @include material-shadow(3, 1.5);
+    
+    .Menu {
+        line-height: 2.5rem;
+        font-size: 1.25rem;
+        color: white;
+        font-weight: 700;
+        padding-bottom: 0.5rem;
+        padding-top: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        // border-bottom: 1px solid white;
+
+        cursor: pointer;
+        
+        &:hover {
+            background: $oc-gray-9;
+        }
+
+        &:active {
+            background: $oc-gray-8;
+        }
+
+        // &:first-child {
+        //     border-top: 0.5px solid white;
+        // }
+
+        &:last-child {
+            border-bottom: 0.5px solid white;
+        }
+        
+    }
+
+    .Menu + .Menu {
+        border-top: 0.5px solid white;
+        // margin-top: 1rem;
+        // border-bottom: 0.5px solid white;
+        
+    }
+}

@@ -1,7 +1,6 @@
 import * as React from 'react';
 // import AuthForm from 'components/auth/AuthForm';
 import FormContainer from 'containers/auth/FormContainer';
-import ModalContainer from 'containers/modals/ModalContainer';
 
 const AuthPage = () => {
   const category = window.location.pathname.includes('login')
@@ -10,7 +9,6 @@ const AuthPage = () => {
   return (
     <>
       <FormContainer category={category} />
-      <ModalContainer />
     </>
   );
 };

@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { State } from 'store/modules';
 import { bindActionCreators } from 'redux';
 import { authActions } from 'store/modules/auth';
+import ModalContainer from 'containers/modals/ModalContainer';
 
 interface BaseProps {
   AuthActions: typeof authActions;
@@ -34,7 +35,11 @@ class Base extends React.Component<BaseProps> {
     }
   };
   public render() {
-    return <div />;
+    return (
+      <>
+        <ModalContainer />
+      </>
+    );
   }
 }
 

@@ -35,18 +35,18 @@ public class AuthController {
     private Environment env;
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ResponseEntity<Map<String, Boolean>> register(@RequestBody Account account) {
+    public ResponseEntity<Map<String, Object>> register(@RequestBody Account account, HttpServletResponse response) {
 
         String username = account.getUsername();
         String password = account.getPassword();
         String email = account.getEmail();
 
-        Map<String, Boolean> resultMap = new HashMap<>();
+        Map<String, Object> resultMap = new HashMap<>();
 
         if (username == null) {
             resultMap.put("success", false);
             resultMap.put("username", true);
-            return new ResponseEntity<>(resultMap, HttpStatus.BAD_GATEWAY);
+            return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
         }
         if (password == null) {
             resultMap.put("success", false);
@@ -105,9 +105,18 @@ public class AuthController {
 
             accountService.register(account);
 
-            resultMap.put("success", true);
+            JWTGenerator generator = new JWTGenerator(env.getProperty("security.jwtkey"));
+            String token = generator.Generate(account);
 
-            return new ResponseEntity<Map<String, Boolean>>(resultMap, HttpStatus.OK);
+            resultMap.put("success", true);
+            resultMap.put("token", token);
+            resultMap.put("username", account.getUsername());
+
+            Cookie tokenCookie = new Cookie("token", token);
+            tokenCookie.setMaxAge(1000 * 60 * 60 * 24 * 7);
+            response.addCookie(tokenCookie);
+
+            return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             resultMap.put("success", false);
