@@ -133,12 +133,12 @@ public class AuthController {
         String username = account.getUsername();
         String password = account.getPassword();
 
-        if (username == null) {
+        if (username == null || username.trim().equals("")) {
             resultMap.put("success", false);
             resultMap.put("username", true);
-            return new ResponseEntity<>(resultMap, HttpStatus.BAD_GATEWAY);
+            return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
         }
-        if (password == null) {
+        if (password == null || password.trim().equals("")) {
             resultMap.put("success", false);
             resultMap.put("password", true);
             return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);

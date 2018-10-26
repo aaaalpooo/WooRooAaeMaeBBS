@@ -38,6 +38,14 @@ type LoginAction = {
       success: boolean;
       token: string;
     };
+    response: {
+      data: {
+        success: boolean;
+        username: boolean;
+        password: boolean;
+        existing: boolean;
+      };
+    };
   };
 };
 
@@ -151,14 +159,41 @@ const penders = [
         if (success) {
           draft.logged = true;
           draft.token = token;
-        } else {
-          draft.logged = false;
         }
       });
     },
     onFailure: (state: AuthState, action: LoginAction) => {
       return produce(state, draft => {
+        const {
+          username,
+          success,
+          password,
+          existing,
+        } = action.payload.response.data;
         draft.logged = false;
+        draft.token = '';
+
+        if (!success) {
+          if (username) {
+            draft.error = true;
+            draft.errorMessage = '아이디를 입력하라!';
+            return;
+          }
+
+          if (!existing && existing !== undefined) {
+            draft.error = true;
+            draft.errorMessage = '없는 아이디다!';
+            return;
+          }
+
+          if (password) {
+            draft.error = true;
+            draft.errorMessage = '비밀번호를 입력하라!';
+          } else {
+            draft.error = true;
+            draft.errorMessage = '정확하지 않은 비밀번호다!';
+          }
+        }
       });
     },
   },

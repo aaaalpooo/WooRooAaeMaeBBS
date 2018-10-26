@@ -1,0 +1,20 @@
+@import 'utils';
+
+.WriteBoxWrapper {
+    display: flex;
+    // margin: 0 auto;
+    margin-top: 2rem;
+    .Textarea {
+        margin: 0 auto;
+        border: 3px solid $oc-gray-8;
+        outline: none;
+        background: white;
+        resize: none;
+        width: 50%;
+        font-size: 1.5rem;
+        padding: 0.25rem;
+        border-radius: 2px;
+
+        @include material-shadow(3, 0.5);
+    }
+}

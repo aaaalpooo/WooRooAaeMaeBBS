@@ -38,10 +38,19 @@ public class BbsController {
 
         Map<String, Object> resultMap = new HashMap<>();
 
+        Boolean verified = false;
+
         try {
 
-            postService.create(post);
+            JWTGenerator generator = new JWTGenerator(env.getProperty("security.jwtkey"));
+            verified = generator.Verify(token);
 
+            if (!verified) {
+                resultMap.put("success", "false");
+                resultMap.put("error", "token");
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+            postService.create(post);
             resultMap.put("success", true);
             return new ResponseEntity<>(resultMap, HttpStatus.CREATED);
         } catch (Exception e) {
@@ -149,4 +158,5 @@ public class BbsController {
             return new ResponseEntity<>(resultMap, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 }
