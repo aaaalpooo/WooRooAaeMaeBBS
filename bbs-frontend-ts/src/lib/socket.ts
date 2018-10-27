@@ -14,9 +14,9 @@ export default (function socketHelper() {
   let _uri: any = null;
 
   const listener = (message: any) => {
-    console.log(`data ${message}`);
     const data = parseJSON(message.data); // JSON 파싱
     if (!data || !data.type) return; // 파싱 실패했거나, type 값이 없으면 무시
+    console.log(data);
     _store.dispatch(data); // 제대로 된 데이터면 store 에 디스패치
   };
 
@@ -29,7 +29,6 @@ export default (function socketHelper() {
   const connect = (uri: any) => {
     _uri = uri;
     _socket = new WebSocket(uri);
-    (window as any)._socket = _socket;
     _socket.onmessage = listener;
     _socket.onopen = event => {
       console.log(`connected to ${uri}`);

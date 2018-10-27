@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequestMapping("/api/v1/bbs")
@@ -50,13 +51,21 @@ public class BbsController {
                 resultMap.put("error", "token");
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
-            postService.create(post);
+
+            RestTemplate restTemplate = new RestTemplate();
+            final String uri = env.getProperty("ws.uri");
+            Map<String, Integer> result = restTemplate.postForObject(uri, post, Map.class);
+            Integer lastId = result.get("lastId");
+
+            Post lastPost = postService.read(Long.parseLong(lastId + ""));
             resultMap.put("success", true);
+            resultMap.put("lastPost", lastPost);
+
             return new ResponseEntity<>(resultMap, HttpStatus.CREATED);
         } catch (Exception e) {
             e.printStackTrace();
             resultMap.put("success", false);
-            return new ResponseEntity<>(resultMap, HttpStatus.CREATED);
+            return new ResponseEntity<>(resultMap, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

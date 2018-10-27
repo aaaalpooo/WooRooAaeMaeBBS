@@ -8,12 +8,19 @@ const cx = classNames.bind(styles);
 interface WriteBoxProps {
   text: string;
   onChange(text: string): void;
+  onWrite(): void;
 }
 
-const WriteBox: React.SFC<WriteBoxProps> = ({ text, onChange }) => {
+const WriteBox: React.SFC<WriteBoxProps> = ({ text, onChange, onWrite }) => {
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = e.target;
     onChange(value);
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      onWrite();
+    }
   };
 
   return (
@@ -25,6 +32,7 @@ const WriteBox: React.SFC<WriteBoxProps> = ({ text, onChange }) => {
         className={cx('Textarea')}
         value={text}
         onChange={handleChange}
+        onKeyPress={handleKeyPress}
       />
     </div>
   );

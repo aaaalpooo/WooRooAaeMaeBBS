@@ -17,8 +17,36 @@ class WriteBoxContainer extends React.Component<WriteBoxContainerProps> {
     WriteActions.changeInput(text);
   };
 
+  public handleWrite = async () => {
+    const { WriteActions, text } = this.props;
+
+    const userInfo = localStorage.getItem('userInfo');
+    if (!userInfo) {
+      return;
+    }
+
+    try {
+      await WriteActions.write(
+        {
+          username: JSON.parse(userInfo).username,
+          title: 'bbs',
+          content: text,
+        },
+        JSON.parse(userInfo).token
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   public render() {
-    return <WriteBox text={this.props.text} onChange={this.handleChange} />;
+    return (
+      <WriteBox
+        text={this.props.text}
+        onChange={this.handleChange}
+        onWrite={this.handleWrite}
+      />
+    );
   }
 }
 

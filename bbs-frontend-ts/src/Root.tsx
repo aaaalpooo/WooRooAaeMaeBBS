@@ -11,9 +11,9 @@ const store = configure();
 const socketURI =
   process.env.NODE_ENV === 'production'
     ? window.location.protocol === `https:`
-      ? `wss://${window.location.host}/user`
-      : `ws://${window.location.host}/user`
-    : 'ws://localhost:8080/user';
+      ? `wss://${window.location.host}/ws`
+      : `ws://${window.location.host}/ws`
+    : 'ws://localhost:4000/ws';
 
 socket.initialize(store, socketURI);
 

@@ -1,0 +1,39 @@
+{
+  "name": "redis-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "start": "cross-env NODE_PATH=dist node dist",
+    "start:dev": "cross-env NODE_PATH=dist nodemon --watch dist/ dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "tslint": "^5.10.0",
+    "tslint-config-airbnb": "^5.9.2",
+    "tslint-config-prettier": "^1.13.0",
+    "typescript": "^2.9.2"
+  },
+  "dependencies": {
+    "@types/dotenv": "^4.0.3",
+    "@types/joi": "^13.6.1",
+    "@types/jsonwebtoken": "^7.2.8",
+    "@types/koa": "^2.0.46",
+    "@types/koa-bodyparser": "^5.0.1",
+    "@types/koa-router": "^7.0.32",
+    "@types/koa-websocket": "^5.0.3",
+    "@types/mysql": "^2.15.5",
+    "@types/redis": "^2.8.7",
+    "dotenv": "^6.1.0",
+    "joi": "^14.0.1",
+    "jsonwebtoken": "^8.3.0",
+    "koa": "^2.6.1",
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^7.4.0",
+    "koa-websocket": "^5.0.1",
+    "mysql": "^2.16.0",
+    "redis": "^2.8.0"
+  }
+}

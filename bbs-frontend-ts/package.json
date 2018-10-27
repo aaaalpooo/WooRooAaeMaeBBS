@@ -26,6 +26,7 @@
     "fs-extra": "3.0.1",
     "hamburgers": "^0.9.3",
     "html-webpack-plugin": "2.29.0",
+    "http-proxy-middleware": "^0.19.0",
     "immer": "^1.7.2",
     "include-media": "^1.4.9",
     "jest": "20.0.4",
