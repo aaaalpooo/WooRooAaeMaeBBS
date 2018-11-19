@@ -21,7 +21,7 @@ export type BbsItem = {
 type GetListAction = {
   payload: {
     data: {
-      list: [BbsItem];
+      list: [BbsItem?];
     };
     response: {
       data: {};
@@ -31,10 +31,12 @@ type GetListAction = {
 
 export type ListState = {
   list: [BbsItem?];
+  isLastPage: boolean;
 };
 
 const initialState: ListState = {
   list: [],
+  isLastPage: false,
 };
 
 const reducer = handleActions<ListState, any>({}, initialState);
@@ -45,7 +47,11 @@ const penders = [
     onSuccess: (state: ListState, action: GetListAction) => {
       return produce(state, draft => {
         const { list } = action.payload.data;
-        draft.list = list;
+        if (list.length === 0) {
+          draft.isLastPage = true;
+          return;
+        }
+        draft.list.push(...list);
       });
     },
   },

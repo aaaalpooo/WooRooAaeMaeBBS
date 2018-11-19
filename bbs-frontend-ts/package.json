@@ -5,6 +5,7 @@
   "dependencies": {
     "@types/axios": "^0.14.0",
     "@types/classnames": "^2.2.6",
+    "@types/lodash": "^4.14.118",
     "@types/moment": "^2.13.0",
     "@types/react-onclickoutside": "^6.7.0",
     "@types/react-router-dom": "^4.3.1",
@@ -31,6 +32,7 @@
     "immer": "^1.7.2",
     "include-media": "^1.4.9",
     "jest": "20.0.4",
+    "lodash": "^4.17.11",
     "moment": "^2.22.2",
     "node-sass": "^4.9.4",
     "object-assign": "4.1.1",
