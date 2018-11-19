@@ -2,6 +2,7 @@ import * as React from 'react';
 import styles from './WriteBox.scss';
 import * as classNames from 'classnames/bind';
 import Textarea from 'react-textarea-autosize';
+import Button from 'components/common/Button';
 
 const cx = classNames.bind(styles);
 
@@ -17,12 +18,6 @@ const WriteBox: React.SFC<WriteBoxProps> = ({ text, onChange, onWrite }) => {
     onChange(value);
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      onWrite();
-    }
-  };
-
   return (
     <div className={cx('WriteBoxWrapper')}>
       <Textarea
@@ -32,8 +27,10 @@ const WriteBox: React.SFC<WriteBoxProps> = ({ text, onChange, onWrite }) => {
         className={cx('Textarea')}
         value={text}
         onChange={handleChange}
-        onKeyPress={handleKeyPress}
       />
+      <div className={cx('ButtonWrapper')}>
+        <Button title="작성하기" theme={'Write'} onClick={onWrite} />
+      </div>
     </div>
   );
 };

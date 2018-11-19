@@ -234,10 +234,11 @@ module.exports = {
                   fallback: {
                     loader: require.resolve('style-loader'),
                     options: {
-                      hmr: false,
-                      modules: 1,
                       importLoaders: 1,
                       minimize: true,
+                      sourceMap: shouldUseSourceMap,
+                      localIdentName: '[name]__[local]___[hash:base64:5]',
+                      modules: 1,
                     },
                   },
                   use: [

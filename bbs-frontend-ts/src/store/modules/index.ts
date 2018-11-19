@@ -3,6 +3,7 @@ import auth, { AuthState } from './auth';
 import modal, { ModalState } from './modal';
 import menu, { MenuState } from './menu';
 import write, { WriteState } from './write';
+import list, { ListState } from './list';
 import { penderReducer as pender } from 'redux-pender';
 
 export default combineReducers({
@@ -10,6 +11,7 @@ export default combineReducers({
   modal,
   menu,
   write,
+  list,
   pender,
 });
 
@@ -18,6 +20,7 @@ export type State = {
   modal: ModalState;
   menu: MenuState;
   write: WriteState;
+  list: ListState;
   pender: {
     pending: any;
     success: any;

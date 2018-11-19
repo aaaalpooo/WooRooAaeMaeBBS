@@ -9,6 +9,7 @@ import { writeActions } from 'store/modules/write';
 interface WriteBoxContainerProps {
   WriteActions: typeof writeActions;
   text: string;
+  logged: boolean;
 }
 
 class WriteBoxContainer extends React.Component<WriteBoxContainerProps> {
@@ -40,19 +41,23 @@ class WriteBoxContainer extends React.Component<WriteBoxContainerProps> {
   };
 
   public render() {
+    const { logged } = this.props;
     return (
-      <WriteBox
-        text={this.props.text}
-        onChange={this.handleChange}
-        onWrite={this.handleWrite}
-      />
+      logged && (
+        <WriteBox
+          text={this.props.text}
+          onChange={this.handleChange}
+          onWrite={this.handleWrite}
+        />
+      )
     );
   }
 }
 
 export default connect(
-  ({ write }: State) => ({
+  ({ write, auth }: State) => ({
     text: write.text,
+    logged: auth.logged,
   }),
   dispatch => ({
     WriteActions: bindActionCreators(writeActions, dispatch),
